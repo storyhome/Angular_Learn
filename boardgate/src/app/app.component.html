@@ -1,23 +1,37 @@
 
-<div
-  
->
-<form  style= "display: flex;
+<form  
+style= "
+display: flex;
 align-items: center;
 justify-content: center;
 height: 100vh;  
 flex-direction: column;
-gap: 20px;"action="">
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your name</mat-label>
-      <input type="text" matInput placeholder="Name" required=""/>
-    </mat-form-field>
+gap: 20px;
+width: 300px;
+margin: auto;
+"
+[formGroup] = "form"
+>
+
+ <mat-form-field appearance="fill">
+ <mat-label>Enter your name</mat-label>
+ <input type="text" matInput placeholder="Name" required="" formControlName="name"/>
+ @if(
+form.get('name')?.hasError('required') && form.get('name')?.touched
+ ){
+ <mat-error>Name is required</mat-error>
+  }
+<!-- min length 3-->
+@if(form.get('name')?.hasError('minlength') && form.get('name')?.touched ){
+    <mat-error>Name must be at least 3 characters long</mat-error>
+}
+</mat-form-field>
 
 
 <! -- MatSelect -->
 <mat-form-field appearance="fill">
     <mat-label>Select your favorite food</mat-label>
-    <mat-select>
+    <mat-select formControlName="favoriteFood">
         <mat-option value="1">Pizza</mat-option>
         <mat-option value="2">Burger</mat-option>
         <mat-option value="3">Pasta</mat-option>
@@ -26,11 +40,12 @@ gap: 20px;"action="">
 <!--MatDatepicker -->
 <mat-form-field ammearance="fill">
     <mat-label>Choose your date of birth</mat-label>
-    <input matInput [matDatepicker]="picker" required="" />
+    <input formControlName= "dateOfBirth"
+    matInput
+   [matDatepicker]="picker" 
+   required="" />
     <mat-datepicker-toggle matSuffix [for] = "picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 
-  </form> 
-</div>
-
+ </form> 
